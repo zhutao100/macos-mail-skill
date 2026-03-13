@@ -1,0 +1,31 @@
+name: CI · PR
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint & Test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          set -euo pipefail
+          for path in AGENTS.md LICENSE README.md SKILL.md Makefile scripts/account/list.applescript scripts/mailbox/list.applescript tests/dictionary_contract.sh tests/smoke_mail.sh; do
+            [ -f "$path" ] || { echo "::error::Missing $path"; exit 1; }
+          done
+      - run: make compile
+      - run: |
+          if command -v shellcheck >/dev/null 2>&1; then shellcheck tests/*.sh; fi
+      - run: head -1 SKILL.md | grep -q '^---' && grep -q '^name:' SKILL.md && grep -q '^description:' SKILL.md
+      - run: make test
