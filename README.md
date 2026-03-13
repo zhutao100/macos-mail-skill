@@ -4,16 +4,14 @@ This repo stores a skill for Apple Mail.app integration on macOS via AppleScript
 
 ## Installation
 
-Install with `skills.sh`:
+```bash
+npx skills add vinitu/macos-mail-skill
+```
+
+Or with [skills.sh](https://skills.sh):
 
 ```bash
 skills.sh add vinitu/macos-mail-skill
-```
-
-If you use the npm installer instead:
-
-```bash
-npx skills add vinitu/macos-mail-skill
 ```
 
 ## Scope
@@ -34,28 +32,20 @@ npx skills add vinitu/macos-mail-skill
 
 ## How To Use
 
+From the skill directory (or path where scripts are installed):
+
 ```bash
-# List all accounts
-osascript -e 'tell application "Mail" to get name of every account'
-
-# List mailboxes
-osascript -e 'tell application "Mail" to get name of every mailbox of account "iCloud"'
-
-# Read recent messages
-osascript -e 'tell application "Mail" to get subject of messages 1 thru 5 of mailbox "INBOX" of account "iCloud"'
-
-# Save a draft
-osascript <<'EOF'
-tell application "Mail"
-    set newMsg to make new outgoing message with properties {subject:"Hello", content:"Draft body here", visible:true}
-    tell newMsg
-        make new to recipient at end of to recipients with properties {address:"someone@example.com"}
-    end tell
-end tell
-EOF
+# List all Mail accounts
+osascript scripts/account/list.applescript
+# List mailboxes in account "iCloud"
+osascript scripts/mailbox/list.applescript "iCloud"
+# List recent messages (account, mailbox, limit); subject | sender | date
+osascript scripts/message/list.applescript "iCloud" "INBOX" 5
+# Create draft (to, subject, body); does not send
+osascript scripts/message/create.applescript "someone@example.com" "Hello" "Draft body here"
 ```
 
-For the full command set and examples, see `SKILL.md`.
+For the full command set and examples, see `SKILL.md` and scripts under `scripts/`.
 
 ## Troubleshooting
 
