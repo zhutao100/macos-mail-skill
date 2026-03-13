@@ -1,9 +1,9 @@
 ---
-name: apple-mail
+name: macos-mail
 description: Read, compose, search, and organize emails in Apple Mail.app on macOS. Use for checking inbox, drafting messages, managing mailboxes, or automating email workflows. Triggers on queries about email, mail, inbox, drafts, or contacting someone via email.
 ---
 
-# Apple Mail Integration
+# macOS Mail Integration
 
 Read, compose, search, and organize emails using AppleScript and Apple Mail.app on macOS.
 

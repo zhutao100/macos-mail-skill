@@ -1,4 +1,4 @@
-# Apple Mail Skill
+# macOS Mail Skill
 
 This repo stores a skill for Apple Mail.app integration on macOS via AppleScript.
 
@@ -7,13 +7,13 @@ This repo stores a skill for Apple Mail.app integration on macOS via AppleScript
 Install with `skills.sh`:
 
 ```bash
-skills.sh add vinitu/apple-mail-skill
+skills.sh add vinitu/macos-mail-skill
 ```
 
 If you use the npm installer instead:
 
 ```bash
-npx skills add vinitu/apple-mail-skill
+npx skills add vinitu/macos-mail-skill
 ```
 
 ## Scope

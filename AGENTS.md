@@ -1,6 +1,6 @@
 # Repo Guide
 
-This repo stores a skill for Apple Mail.app integration on macOS.
+This repo stores a skill for macOS Mail.app integration.
 
 ## Goal
 
