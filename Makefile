@@ -10,8 +10,9 @@ compile:
 	done
 
 check:
+	@command -v jq >/dev/null || { echo "check: jq is required"; exit 1; }
 	@osascript -e 'tell application "Mail" to get name' >/dev/null || { echo "check: Mail.app not available"; exit 1; }
-	@echo "Mail.app is available"
+	@echo "Mail.app and jq are available"
 
 test: test-dictionary test-smoke
 
