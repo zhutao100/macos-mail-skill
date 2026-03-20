@@ -7,7 +7,7 @@ on run argv
 	set idx to item 3 of argv as integer
 
 	tell application "Mail"
-		set msgRecord to contents of message idx of mailbox mbName of account accName
+		set msgRecord to message idx of mailbox mbName of account accName
 		return my messageJson(msgRecord, accName, mbName, idx)
 	end tell
 end run

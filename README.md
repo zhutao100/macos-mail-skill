@@ -18,6 +18,7 @@ skills.sh add vinitu/macos-mail-skill
 
 - List accounts and mailboxes configured in Mail.app.
 - Read messages with structured JSON output.
+- Show a message in the Mail.app window.
 - Create drafts, send messages, and reply to messages.
 - Search messages by subject or sender.
 - Move, delete, flag, and mark messages.
@@ -45,6 +46,8 @@ scripts/commands/mailbox/count.sh "iCloud" "INBOX"
 scripts/commands/message/list.sh "iCloud" "INBOX" 5
 # Read one message
 scripts/commands/message/get.sh "iCloud" "INBOX" 1
+# Show one message in Mail.app
+scripts/commands/message/show.sh "iCloud" "INBOX" 1
 # Create draft (does not send)
 scripts/commands/message/create.sh "someone@example.com" "Hello" "Draft body here" false
 ```
