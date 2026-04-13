@@ -48,6 +48,8 @@ scripts/commands/message/list.sh "iCloud" "INBOX" 5
 scripts/commands/message/get.sh "iCloud" "INBOX" 1
 # Show one message in Mail.app
 scripts/commands/message/show.sh "iCloud" "INBOX" 1
+# Get raw RFC 822 message source
+scripts/commands/message/source.sh "iCloud" "INBOX" 1
 # Create draft (does not send)
 scripts/commands/message/create.sh "someone@example.com" "Hello" "Draft body here" false
 ```

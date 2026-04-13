@@ -69,6 +69,7 @@ scripts/commands/message/list.sh "iCloud" "INBOX" 5
 scripts/commands/message/get.sh "iCloud" "INBOX" 1
 scripts/commands/message/get.sh "iCloud" "INBOX" 1 subject
 scripts/commands/message/show.sh "iCloud" "INBOX" 1
+scripts/commands/message/source.sh "iCloud" "INBOX" 1
 scripts/commands/message/search.sh "iCloud" "INBOX" subject_contains "invoice"
 scripts/commands/message/search.sh "iCloud" "INBOX" sender_contains "john@example.com"
 scripts/commands/message/exists.sh "iCloud" "INBOX" 1

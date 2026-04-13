@@ -25,9 +25,17 @@ end run
 
 on matchesSearch(msgRecord, searchType, searchVal)
 	if searchType is "subject_contains" then
-		return subject of msgRecord contains searchVal
+		set subjectValue to ""
+		try
+			set subjectValue to subject of msgRecord as text
+		end try
+		return subjectValue contains searchVal
 	else if searchType is "sender_contains" then
-		return sender of msgRecord contains searchVal
+		set senderValue to ""
+		try
+			set senderValue to sender of msgRecord as text
+		end try
+		return senderValue contains searchVal
 	end if
 
 	error "Unknown search type: " & searchType
