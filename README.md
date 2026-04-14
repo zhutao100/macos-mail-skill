@@ -83,3 +83,8 @@ For the full command set and examples, see `SKILL.md`.
 | Mailbox not found | Check mailbox name with `scripts/commands/mailbox/list.sh "ACCOUNT"` |
 | `jq is required` | Install `jq` and ensure it is in `PATH` |
 | Slow searches | Use `scripts/commands/message/search-sqlite.sh` (requires Full Disk Access) |
+
+## Development
+
+- Run checks: `make compile && make test && make lint`
+- Pre-commit (prek): `prek install --prepare-hooks` (optional self-healing hook: `git config core.hooksPath .githooks`)

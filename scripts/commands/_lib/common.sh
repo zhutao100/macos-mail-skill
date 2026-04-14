@@ -28,6 +28,7 @@ capture_osascript() {
 
   local output
   if ! output=$(/usr/bin/osascript "$script_path" "$@" 2>&1); then
+    echo "osascript failed: $script_path" >&2
     printf '%s\n' "$output" >&2
     exit 1
   fi

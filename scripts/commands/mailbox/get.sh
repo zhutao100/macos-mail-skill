@@ -6,7 +6,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=scripts/commands/_lib/common.sh
 source "$SCRIPT_DIR/../_lib/common.sh"
 
-[[ $# -ge 2 && $# -le 3 ]] || { echo "Usage: $(basename "$0") <account-name> <mailbox-name> [id|name|account|message_count]" >&2; exit 1; }
+[[ $# -ge 2 && $# -le 3 ]] || {
+  echo "Usage: $(basename "$0") <account-name> <mailbox-name> [id|name|account|message_count]" >&2
+  exit 1
+}
 
 account_name="$1"
 mailbox_name="$2"
@@ -30,8 +33,7 @@ if [[ -z "$property" ]]; then
 fi
 
 case "$property" in
-  id|name|account|message_count)
-    ;;
+  id | name | account | message_count) ;;
   *)
     echo "Unsupported mailbox property: $property" >&2
     exit 1

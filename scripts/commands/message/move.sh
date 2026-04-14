@@ -6,7 +6,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=scripts/commands/_lib/common.sh
 source "$SCRIPT_DIR/../_lib/common.sh"
 
-[[ $# -eq 4 ]] || { echo "Usage: $(basename "$0") <account-name> <source-mailbox> <index> <target-mailbox>" >&2; exit 1; }
+[[ $# -eq 4 ]] || {
+  echo "Usage: $(basename "$0") <account-name> <source-mailbox> <index> <target-mailbox>" >&2
+  exit 1
+}
 
 account_name="$1"
 source_mailbox="$2"

@@ -1,0 +1,44 @@
+# Portable root config (works with both pre-commit and prek)
+# - Keep this file small ("thin root").
+# - Put language-specific hooks in per-subproject configs (workspace mode) or use files: scoping.
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]
+
+  - repo: local
+    hooks:
+      - id: shfmt
+        name: shfmt (auto-fix)
+        entry: shfmt -w -i 2 -ci
+        language: system
+        types: [shell]
+
+      - id: shellcheck
+        name: shellcheck
+        entry: shellcheck -x
+        language: system
+        types: [shell]
+
+      - id: applescript-compile
+        name: AppleScript compile
+        entry: make compile
+        language: system
+        pass_filenames: false
+        files: \.applescript$
+
+      - id: applescript-unit
+        name: AppleScript unit tests
+        entry: make test-unit
+        language: system
+        pass_filenames: false

@@ -6,7 +6,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=scripts/commands/_lib/common.sh
 source "$SCRIPT_DIR/../_lib/common.sh"
 
-[[ $# -ge 1 && $# -le 2 ]] || { echo "Usage: $(basename "$0") <account-name> [id|name]" >&2; exit 1; }
+[[ $# -ge 1 && $# -le 2 ]] || {
+  echo "Usage: $(basename "$0") <account-name> [id|name]" >&2
+  exit 1
+}
 
 account_name="$1"
 property="${2:-}"
@@ -22,8 +25,7 @@ if [[ -z "$property" ]]; then
 fi
 
 case "$property" in
-  id|name)
-    ;;
+  id | name) ;;
   *)
     echo "Unsupported account property: $property" >&2
     exit 1

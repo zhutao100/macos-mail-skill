@@ -6,7 +6,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=scripts/commands/_lib/common.sh
 source "$SCRIPT_DIR/../_lib/common.sh"
 
-[[ $# -ge 1 && $# -le 2 ]] || { echo "Usage: $(basename "$0") <message-id> [property]" >&2; exit 1; }
+[[ $# -ge 1 && $# -le 2 ]] || {
+  echo "Usage: $(basename "$0") <message-id> [property]" >&2
+  exit 1
+}
 
 message_id="$1"
 property="${2:-}"
@@ -20,8 +23,7 @@ if [[ -z "$property" ]]; then
 fi
 
 case "$property" in
-  id|account|mailbox|index|subject|sender|date_received|date_sent|message_id|reply_to|message_size|read|flagged|junk|flag_index|background_color|all_headers|content)
-    ;;
+  id | account | mailbox | index | subject | sender | date_received | date_sent | message_id | reply_to | message_size | read | flagged | junk | flag_index | background_color | all_headers | content) ;;
   *)
     echo "Unsupported message property: $property" >&2
     exit 1

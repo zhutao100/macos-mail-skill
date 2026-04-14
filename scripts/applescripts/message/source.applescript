@@ -70,4 +70,3 @@ on replaceText(findText, replaceTextValue, sourceText)
 	set AppleScript's text item delimiters to ""
 	return replacedText
 end replaceText
-

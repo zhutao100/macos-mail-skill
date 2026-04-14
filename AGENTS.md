@@ -14,7 +14,9 @@ This repo stores a skill for macOS Mail.app integration.
 - `AGENTS.md`: this file; rules for coding agents.
 - `SKILL.md`: the skill contract and usage instructions for agents.
 - `README.md`: public project overview and installation notes.
-- `Makefile`: targets `dictionary-mail`, `check`, `compile`, `test` (test-dictionary + test-smoke).
+- `Makefile`: targets `dictionary-mail`, `check`, `compile`, `test` (test-dictionary + test-unit + test-smoke).
+- `.pre-commit-config.yaml`: prek/pre-commit hooks (format + checks).
+- `.githooks/pre-commit`: agent-friendly self-healing prek hook shim (optional).
 - `scripts/commands/`: public shell interface. All commands return JSON by default.
 - `scripts/commands/_lib/common.sh`: shared shell helpers.
 - `scripts/commands/account/`: `list.sh`, `get.sh`, `exists.sh`, `check-mail.sh`.
@@ -23,6 +25,7 @@ This repo stores a skill for macOS Mail.app integration.
 - `scripts/commands/signature/list.sh`, `scripts/commands/viewer/inbox.sh`, `scripts/commands/import/mailbox.sh`, `scripts/commands/url/mailto.sh`.
 - `scripts/applescripts/account/`, `mailbox/`, `message/`, `signature/`, `viewer/`, `import/`, `url/`: internal AppleScript entrypoints.
 - `tests/dictionary_contract.sh`: contract test against Mail.app scripting dictionary.
+- `tests/unit_parsing.sh`: unit-ish tests for pure parsing AppleScripts (no Mail.app required).
 - `tests/smoke_mail.sh`: smoke test for the public command layer (skips when Mail.app is not available).
 - `.github/workflows/ci-pr.yml`, `ci-main.yml`: CI on PR and push to main.
 
@@ -36,8 +39,9 @@ This repo stores a skill for macOS Mail.app integration.
 After making changes:
 
 - run `make check` to ensure Mail.app and `jq` are available;
-- run `make test` to run dictionary contract and smoke tests;
+- run `make test` to run dictionary contract + unit + smoke tests;
 - run `make compile` to compile all AppleScript files (syntax check);
+- run `prek run --all-files` to verify pre-commit checks (or rely on `.githooks/pre-commit`);
 - update `SKILL.md` when command coverage changes.
 
 ## Editing Rules

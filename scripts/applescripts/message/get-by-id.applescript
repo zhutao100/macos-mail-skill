@@ -4,7 +4,7 @@ on run argv
 	if (count of argv) < 1 then error "Usage: get-by-id.applescript <message-id>"
 	set targetIdRaw to item 1 of argv as text
 	set targetId to my stripAngles(targetIdRaw)
-	
+
 	tell application "Mail"
 		set allAccounts to every account
 		repeat with acc in allAccounts
@@ -26,7 +26,7 @@ on run argv
 			end repeat
 		end repeat
 	end tell
-	
+
 	error "Message not found with id: " & targetIdRaw
 end run
 
@@ -65,7 +65,7 @@ on messageJson(msgRecord, accName, mbName, idxJson)
 	set junkValue to my jsonBoolean(rawJunkValue)
 	set backgroundColorValue to my jsonNullable(rawBackgroundColorValue)
 	set allHeadersValue to my jsonNullable(rawAllHeadersValue)
-	
+
 	return "{" & "\"id\":" & my jsonString(identityValue) & "," & "\"account\":" & my jsonString(accName) & "," & "\"mailbox\":" & my jsonString(mbName) & "," & "\"index\":" & idxJson & "," & "\"subject\":" & my jsonString(subjectValue) & "," & "\"sender\":" & my jsonString(senderValue) & "," & "\"date_received\":" & dateReceivedValue & "," & "\"date_sent\":" & dateSentValue & "," & "\"message_id\":" & my jsonNullable(messageIdValue) & "," & "\"reply_to\":" & replyToValue & "," & "\"message_size\":" & messageSizeValue & "," & "\"read\":" & readValue & "," & "\"flagged\":" & flaggedValue & "," & "\"junk\":" & junkValue & "," & "\"flag_index\":" & flagIndexValue & "," & "\"background_color\":" & backgroundColorValue & "," & "\"all_headers\":" & allHeadersValue & "," & "\"content\":" & my jsonString(contentValue) & "}"
 end messageJson
 

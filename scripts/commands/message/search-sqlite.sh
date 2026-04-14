@@ -5,7 +5,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=scripts/commands/_lib/common.sh
 source "$SCRIPT_DIR/../_lib/common.sh"
 
-[[ $# -ge 1 && $# -le 2 ]] || { echo "Usage: $(basename "$0") <query> [limit]" >&2; exit 1; }
+[[ $# -ge 1 && $# -le 2 ]] || {
+  echo "Usage: $(basename "$0") <query> [limit]" >&2
+  exit 1
+}
 
 query="$1"
 limit="${2:-20}"
@@ -13,7 +16,10 @@ limit="${2:-20}"
 require_positive_int "limit" "$limit"
 ensure_jq
 
-command -v sqlite3 >/dev/null 2>&1 || { echo "sqlite3 is required" >&2; exit 1; }
+command -v sqlite3 >/dev/null 2>&1 || {
+  echo "sqlite3 is required" >&2
+  exit 1
+}
 
 find_envelope_index() {
   local base_dir="$HOME/Library/Mail"
@@ -22,8 +28,14 @@ find_envelope_index() {
 }
 
 db_path="$(find_envelope_index || true)"
-[[ -n "$db_path" ]] || { echo "Envelope Index database not found under $HOME/Library/Mail" >&2; exit 1; }
-[[ -r "$db_path" ]] || { echo "No read permission for $db_path. Grant Full Disk Access to your terminal app." >&2; exit 1; }
+[[ -n "$db_path" ]] || {
+  echo "Envelope Index database not found under $HOME/Library/Mail" >&2
+  exit 1
+}
+[[ -r "$db_path" ]] || {
+  echo "No read permission for $db_path. Grant Full Disk Access to your terminal app." >&2
+  exit 1
+}
 
 query_one_line="${query//$'\n'/ }"
 query_sql="${query_one_line//\'/\'\'}"
@@ -80,7 +92,10 @@ SQL
 
 if ! raw_output="$(run_query "$sql_with_message_id")"; then
   if printf '%s' "$raw_output" | grep -qF "no such table: message_global_data"; then
-    raw_output="$(run_query "$sql_without_message_id")" || { echo "$raw_output" >&2; exit 1; }
+    raw_output="$(run_query "$sql_without_message_id")" || {
+      echo "$raw_output" >&2
+      exit 1
+    }
   else
     echo "$raw_output" >&2
     exit 1
