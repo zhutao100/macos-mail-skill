@@ -23,15 +23,20 @@ fi
 mailboxes_raw="$(mailbox_names_raw "$account_name")"
 ensure_jq
 
-out='[]'
-while IFS= read -r mailbox_name; do
-  [[ -n "$mailbox_name" ]] || continue
-  count_raw="$(capture_osascript "$APPLETS_DIR/mailbox/count.applescript" "$account_name" "$mailbox_name")"
-  mailbox_json="$("$JQ_BIN" -nc \
-    --arg id "${account_name}/${mailbox_name}" \
-    --arg name "$mailbox_name" \
-    --arg account "$account_name" \
-    --argjson count "$count_raw" \
+	out='[]'
+	while IFS= read -r mailbox_name; do
+	  [[ -n "$mailbox_name" ]] || continue
+	  count_raw="0"
+	  if count_candidate="$(try_capture_osascript "$APPLETS_DIR/mailbox/count.applescript" "$account_name" "$mailbox_name" 2>/dev/null)"; then
+	    if [[ "$count_candidate" =~ ^[0-9]+$ ]]; then
+	      count_raw="$count_candidate"
+	    fi
+	  fi
+	  mailbox_json="$("$JQ_BIN" -nc \
+	    --arg id "${account_name}/${mailbox_name}" \
+	    --arg name "$mailbox_name" \
+	    --arg account "$account_name" \
+	    --argjson count "$count_raw" \
     '{id: $id, name: $name, account: $account, message_count: $count}')"
   out="$(printf '%s' "$out" | "$JQ_BIN" -c --argjson item "$mailbox_json" '. + [$item]')"
 done <<< "$mailboxes_raw"

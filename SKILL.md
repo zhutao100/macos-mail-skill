@@ -17,6 +17,7 @@ Do not call `scripts/applescripts` directly.
 - macOS with Mail.app configured
 - Automation access for your terminal app
 - `jq`
+- (Optional) Full Disk Access for `scripts/commands/message/search-sqlite.sh`
 
 Check access with:
 
@@ -42,6 +43,7 @@ All public commands return JSON by default.
 
 ```bash
 scripts/commands/account/list.sh
+scripts/commands/account/default.sh
 scripts/commands/account/get.sh "iCloud"
 scripts/commands/account/get.sh "iCloud" name
 scripts/commands/account/exists.sh "iCloud"
@@ -72,6 +74,9 @@ scripts/commands/message/show.sh "iCloud" "INBOX" 1
 scripts/commands/message/source.sh "iCloud" "INBOX" 1
 scripts/commands/message/search.sh "iCloud" "INBOX" subject_contains "invoice"
 scripts/commands/message/search.sh "iCloud" "INBOX" sender_contains "john@example.com"
+scripts/commands/message/search-sqlite.sh "invoice" 20
+# Use `message_id` from message/get.sh output
+scripts/commands/message/get-by-id.sh "<message-id@example.com>"
 scripts/commands/message/exists.sh "iCloud" "INBOX" 1
 ```
 
@@ -107,7 +112,7 @@ scripts/commands/message/extract-address.sh "Jane Doe <jane@example.com>"
 ```bash
 scripts/commands/signature/list.sh
 scripts/commands/viewer/inbox.sh
-scripts/commands/import/mailbox.sh "/Users/Dmytro/Downloads/Archive.mbox"
+scripts/commands/import/mailbox.sh "$HOME/Downloads/Archive.mbox"
 scripts/commands/url/mailto.sh "mailto:user@example.com?subject=Hello"
 ```
 

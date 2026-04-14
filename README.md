@@ -28,7 +28,7 @@ skills.sh add vinitu/macos-mail-skill
 - macOS 12+ with Mail.app configured and signed in
 - Automation permission granted to your terminal app
 - `jq`
-- (Optional) Full Disk Access for SQLite-based search
+- (Optional) Full Disk Access for `scripts/commands/message/search-sqlite.sh`
 
 ## How To Use
 
@@ -38,6 +38,8 @@ Do not call `scripts/applescripts` directly.
 ```bash
 # List all Mail accounts
 scripts/commands/account/list.sh
+# Get default account
+scripts/commands/account/default.sh
 # List mailboxes in account "iCloud"
 scripts/commands/mailbox/list.sh "iCloud"
 # Count messages in INBOX
@@ -50,6 +52,10 @@ scripts/commands/message/get.sh "iCloud" "INBOX" 1
 scripts/commands/message/show.sh "iCloud" "INBOX" 1
 # Get raw RFC 822 message source
 scripts/commands/message/source.sh "iCloud" "INBOX" 1
+# SQLite search (requires Full Disk Access)
+scripts/commands/message/search-sqlite.sh "invoice" 20
+# Get a message by Message-ID header
+scripts/commands/message/get-by-id.sh "<message-id@example.com>"
 # Create draft (does not send)
 scripts/commands/message/create.sh "someone@example.com" "Hello" "Draft body here" false
 ```
@@ -76,4 +82,4 @@ For the full command set and examples, see `SKILL.md`.
 | Account not found | Check account name with `scripts/commands/account/list.sh` |
 | Mailbox not found | Check mailbox name with `scripts/commands/mailbox/list.sh "ACCOUNT"` |
 | `jq is required` | Install `jq` and ensure it is in `PATH` |
-| Slow searches | Limit result count or use SQLite-based `apple-mail-search` skill |
+| Slow searches | Use `scripts/commands/message/search-sqlite.sh` (requires Full Disk Access) |
