@@ -11,8 +11,8 @@ compile:
 	out_dir="build/applescripts"; \
 	rm -rf "$$out_dir"; \
 	mkdir -p "$$out_dir"; \
-	find scripts -type f -name '*.applescript' -print0 | while IFS= read -r -d '' file; do \
-		rel="$${file#scripts/}"; \
+	find macos-mail/scripts -type f -name '*.applescript' -print0 | while IFS= read -r -d '' file; do \
+		rel="$${file#macos-mail/scripts/}"; \
 		out_path="$$out_dir/$${rel%.applescript}.scpt"; \
 		mkdir -p "$$(dirname "$$out_path")"; \
 		/usr/bin/osacompile -l AppleScript -o "$$out_path" "$$file" >/dev/null; \
@@ -20,7 +20,7 @@ compile:
 
 lint:
 	@if command -v shellcheck >/dev/null 2>&1; then \
-		find scripts tests -name '*.sh' -exec shellcheck {} +; \
+		find macos-mail/scripts tests -name '*.sh' -exec shellcheck {} +; \
 	else \
 		echo "lint: shellcheck not available, skipping"; \
 	fi

@@ -30,7 +30,7 @@ jobs:
       - name: Verify expected files
         run: |
           set -euo pipefail
-          for path in AGENTS.md LICENSE README.md SKILL.md Makefile tests/dictionary_contract.sh tests/smoke_mail.sh scripts/applescripts/account/list.applescript scripts/applescripts/mailbox/list.applescript scripts/commands/account/list.sh scripts/commands/mailbox/list.sh scripts/commands/message/get.sh; do
+          for path in AGENTS.md LICENSE README.md macos-mail/SKILL.md Makefile tests/dictionary_contract.sh tests/smoke_mail.sh macos-mail/scripts/applescripts/account/list.applescript macos-mail/scripts/applescripts/mailbox/list.applescript macos-mail/scripts/commands/account/list.sh macos-mail/scripts/commands/mailbox/list.sh macos-mail/scripts/commands/message/get.sh; do
             [ -f "$path" ] || { echo "::error::Missing $path"; exit 1; }
           done
 
@@ -43,27 +43,27 @@ jobs:
         run: |
           set -euo pipefail
           if command -v shellcheck >/dev/null 2>&1; then
-            find scripts tests -name '*.sh' -exec shellcheck {} +
+            find macos-mail/scripts tests -name '*.sh' -exec shellcheck {} +
           else
             echo "shellcheck not available, skipping"
           fi
 
-      - name: Validate SKILL.md frontmatter
+      - name: Validate macos-mail/SKILL.md frontmatter
         run: |
           set -euo pipefail
-          if ! head -1 SKILL.md | grep -q '^---'; then
-            echo "::error::SKILL.md must start with YAML frontmatter (---)"
+          if ! head -1 macos-mail/SKILL.md | grep -q '^---'; then
+            echo "::error::macos-mail/SKILL.md must start with YAML frontmatter (---)"
             exit 1
           fi
-          if ! grep -q '^name:' SKILL.md; then
-            echo "::error::SKILL.md frontmatter must contain 'name:' field"
+          if ! grep -q '^name:' macos-mail/SKILL.md; then
+            echo "::error::macos-mail/SKILL.md frontmatter must contain 'name:' field"
             exit 1
           fi
-          if ! grep -q '^description:' SKILL.md; then
-            echo "::error::SKILL.md frontmatter must contain 'description:' field"
+          if ! grep -q '^description:' macos-mail/SKILL.md; then
+            echo "::error::macos-mail/SKILL.md frontmatter must contain 'description:' field"
             exit 1
           fi
-          echo "SKILL.md frontmatter is valid"
+          echo "macos-mail/SKILL.md frontmatter is valid"
 
       - name: Run dictionary contract
         run: |

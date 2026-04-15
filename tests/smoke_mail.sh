@@ -19,7 +19,7 @@ osascript -e 'tell application "Mail" to get name' | grep -q . || {
 }
 
 # Public command layer: list accounts
-acc_json="$("$ROOT_DIR/scripts/commands/account/list.sh" 2>&1)" || {
+acc_json="$("$ROOT_DIR/macos-mail/scripts/commands/account/list.sh" 2>&1)" || {
   echo "smoke_mail: Mail not running, skipping."
   exit 0
 }
@@ -29,7 +29,7 @@ printf '%s\n' "$acc_json" | "$JQ_BIN" -e 'type == "array"' >/dev/null || {
 }
 
 first_acc="$(printf '%s\n' "$acc_json" | "$JQ_BIN" -r '.[0].name // empty')"
-mb_json="$("$ROOT_DIR/scripts/commands/mailbox/list.sh" "${first_acc:-}" 2>&1)" || mb_json=""
+mb_json="$("$ROOT_DIR/macos-mail/scripts/commands/mailbox/list.sh" "${first_acc:-}" 2>&1)" || mb_json=""
 
 first_mb=""
 if printf '%s\n' "$mb_json" | "$JQ_BIN" -e 'type == "array"' >/dev/null 2>&1; then
@@ -43,7 +43,7 @@ fi
 
 if [ -n "$first_acc" ]; then
   if [ -n "$first_mb" ]; then
-    count_json="$("$ROOT_DIR/scripts/commands/mailbox/count.sh" "$first_acc" "$first_mb" 2>&1)" || {
+    count_json="$("$ROOT_DIR/macos-mail/scripts/commands/mailbox/count.sh" "$first_acc" "$first_mb" 2>&1)" || {
       echo "smoke_mail: mailbox count failed." >&2
       exit 1
     }
@@ -52,7 +52,7 @@ if [ -n "$first_acc" ]; then
       exit 1
     }
 
-    message_list_json="$("$ROOT_DIR/scripts/commands/message/list.sh" "$first_acc" "$first_mb" 1 2>&1)" || {
+    message_list_json="$("$ROOT_DIR/macos-mail/scripts/commands/message/list.sh" "$first_acc" "$first_mb" 1 2>&1)" || {
       echo "smoke_mail: message list failed." >&2
       exit 1
     }
@@ -63,7 +63,7 @@ if [ -n "$first_acc" ]; then
 
     first_index="$(printf '%s\n' "$message_list_json" | "$JQ_BIN" -r '.[0].index // empty')"
     if [ -n "$first_index" ]; then
-      message_json="$("$ROOT_DIR/scripts/commands/message/get.sh" "$first_acc" "$first_mb" "$first_index" 2>&1)" || {
+      message_json="$("$ROOT_DIR/macos-mail/scripts/commands/message/get.sh" "$first_acc" "$first_mb" "$first_index" 2>&1)" || {
         echo "smoke_mail: message get failed." >&2
         exit 1
       }
@@ -72,7 +72,7 @@ if [ -n "$first_acc" ]; then
         exit 1
       }
 
-      show_json="$("$ROOT_DIR/scripts/commands/message/show.sh" "$first_acc" "$first_mb" "$first_index" 2>&1)" || {
+      show_json="$("$ROOT_DIR/macos-mail/scripts/commands/message/show.sh" "$first_acc" "$first_mb" "$first_index" 2>&1)" || {
         echo "smoke_mail: message show failed." >&2
         exit 1
       }

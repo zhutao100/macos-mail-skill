@@ -20,8 +20,8 @@ run_osascript() {
   /usr/bin/osascript "$script_path" "$@"
 }
 
-name_script="$ROOT_DIR/scripts/applescripts/message/extract-name.applescript"
-addr_script="$ROOT_DIR/scripts/applescripts/message/extract-address.applescript"
+name_script="$ROOT_DIR/macos-mail/scripts/applescripts/message/extract-name.applescript"
+addr_script="$ROOT_DIR/macos-mail/scripts/applescripts/message/extract-address.applescript"
 
 assert_eq "name angle" "Jane Doe" "$(run_osascript "$name_script" 'Jane Doe <jane@example.com>')"
 assert_eq "addr angle" "jane@example.com" "$(run_osascript "$addr_script" 'Jane Doe <jane@example.com>')"
