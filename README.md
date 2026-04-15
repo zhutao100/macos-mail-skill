@@ -1,4 +1,6 @@
-# macOS Mail Skill
+# MacOS Mail Skill
+
+> an enhanced fork of [vinitu/macos-mail-skill](https://github.com/vinitu/macos-mail-skill).
 
 This repo stores a skill for Apple Mail.app integration on macOS via AppleScript.
 
@@ -76,3 +78,7 @@ For the full command set and examples, see `macos-mail/SKILL.md`.
 
 - Run checks: `make compile && make test && make lint`
 - Pre-commit (prek): `prek install --prepare-hooks` (optional self-healing hook: `git config core.hooksPath .githooks`)
+
+## Acknowledgements
+
+This project is an enhanced fork of the original [vinitu/macos-mail-skill](https://github.com/vinitu/macos-mail-skill).
