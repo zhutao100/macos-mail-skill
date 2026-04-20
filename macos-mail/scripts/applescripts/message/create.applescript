@@ -16,15 +16,15 @@ on run argv
 	set bccCsv to ""
 	if (count of argv) ≥ 6 then set bccCsv to item 6 of argv as text
 
-	set attachments to {}
-	if (count of argv) ≥ 7 then set attachments to items 7 thru -1 of argv
+	set attachmentPaths to {}
+	if (count of argv) ≥ 7 then set attachmentPaths to items 7 thru -1 of argv
 
 	tell application "Mail"
 		set newMsg to make new outgoing message with properties {subject:subj, content:bodyText, visible:showWin}
 		my addToRecipients(newMsg, toCsv)
 		my addCcRecipients(newMsg, ccCsv)
 		my addBccRecipients(newMsg, bccCsv)
-		my addAttachments(newMsg, attachments)
+		my addAttachments(newMsg, attachmentPaths)
 		save newMsg
 		set draftId to ""
 		try
@@ -76,11 +76,11 @@ on addBccRecipients(newMsg, csv)
 	end using terms from
 end addBccRecipients
 
-on addAttachments(newMsg, attachments)
+on addAttachments(newMsg, attachmentPaths)
 	using terms from application "Mail"
-		if (count of attachments) is 0 then return
+		if (count of attachmentPaths) is 0 then return
 		tell content of newMsg
-			repeat with p in attachments
+			repeat with p in attachmentPaths
 				set posixPath to p as text
 				if posixPath is not "" then
 					set f to POSIX file posixPath as alias

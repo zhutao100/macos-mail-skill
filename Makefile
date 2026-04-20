@@ -37,6 +37,7 @@ test-dictionary:
 
 test-unit:
 	@bash tests/unit_parsing.sh
+	@bash tests/unit_commands.sh
 
 test-smoke:
 	@bash tests/smoke_mail.sh

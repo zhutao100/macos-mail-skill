@@ -20,11 +20,11 @@ on run argv
 				try
 					set mbName to name of mb as text
 				end try
-				set key to accName & "/" & mbName
-				if key is in seenKeys then
+				set dedupeKey to accName & "/" & mbName
+				if dedupeKey is in seenKeys then
 					-- skip duplicates
 				else
-					set end of seenKeys to key
+					set end of seenKeys to dedupeKey
 					set msgCount to 0
 					try
 						set msgCount to count of messages of mb

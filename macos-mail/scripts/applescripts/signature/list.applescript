@@ -2,9 +2,12 @@
 on run argv
 	tell application "Mail"
 		set sigList to every signature
+		if sigList is missing value then return ""
 		set output to ""
 		repeat with s in sigList
-			set output to output & (name of s) & linefeed
+			try
+				set output to output & (name of s as text) & linefeed
+			end try
 		end repeat
 		return output
 	end tell

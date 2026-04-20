@@ -4,6 +4,7 @@ COMMON_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMMANDS_DIR="$(cd "$COMMON_DIR/.." && pwd)"
 REPO_ROOT="$(cd "$COMMANDS_DIR/../.." && pwd)"
 APPLETS_DIR="$REPO_ROOT/scripts/applescripts"
+OSASCRIPT_BIN="${OSASCRIPT_BIN:-/usr/bin/osascript}"
 
 if [[ -z "${JQ_BIN:-}" ]]; then
   if JQ_BIN="$(command -v jq 2>/dev/null)"; then
@@ -27,7 +28,7 @@ capture_osascript() {
   shift
 
   local output
-  if ! output=$(/usr/bin/osascript "$script_path" "$@" 2>&1); then
+  if ! output=$("$OSASCRIPT_BIN" "$script_path" "$@" 2>&1); then
     echo "osascript failed: $script_path" >&2
     printf '%s\n' "$output" >&2
     exit 1
@@ -40,7 +41,7 @@ try_capture_osascript() {
   local script_path="$1"
   shift
 
-  /usr/bin/osascript "$script_path" "$@"
+  "$OSASCRIPT_BIN" "$script_path" "$@"
 }
 
 normalize_json_input() {

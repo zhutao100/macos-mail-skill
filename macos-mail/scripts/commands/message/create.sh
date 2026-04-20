@@ -29,7 +29,12 @@ esac
 
 ensure_jq
 
-message_json="$(capture_osascript "$APPLETS_DIR/message/create.applescript" "$to_csv" "$subject" "$body" "$visible" "$cc_csv" "$bcc_csv" "${attachments[@]}")"
-attachments_json="$($JQ_BIN -nc '$ARGS.positional' --args "${attachments[@]}")"
+if ((${#attachments[@]} > 0)); then
+  message_json="$(capture_osascript "$APPLETS_DIR/message/create.applescript" "$to_csv" "$subject" "$body" "$visible" "$cc_csv" "$bcc_csv" "${attachments[@]}")"
+  attachments_json="$($JQ_BIN -nc '$ARGS.positional' --args "${attachments[@]}")"
+else
+  message_json="$(capture_osascript "$APPLETS_DIR/message/create.applescript" "$to_csv" "$subject" "$body" "$visible" "$cc_csv" "$bcc_csv")"
+  attachments_json="$($JQ_BIN -nc '[]')"
+fi
 
 printf '%s' "$message_json" | "$JQ_BIN" -c --argjson attachments "$attachments_json" '. + {attachments: $attachments}'

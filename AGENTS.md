@@ -50,3 +50,9 @@ After making changes:
 - Do not claim support for a feature unless it is verified with AppleScript and Mail.app.
 - Keep `macos-mail/SKILL.md` and `README.md` about the public `macos-mail/scripts/commands` interface, not the internal AppleScript backend.
 - Treat email data as real user data. Never send messages without explicit user approval.
+
+## Gotchas
+
+- macOS ships `/bin/bash` 3.2; with `set -u`, expanding an empty array (`${arr[@]}`) can error. Guard on `${#arr[@]}` before expanding.
+- In Mail AppleScripts, avoid using Mail dictionary terms (for example `attachments` or `key`) as variable names; they can resolve to Mail classes/properties.
+- For command-layer unit tests, set `OSASCRIPT_BIN` to a stub to avoid invoking real `osascript`/Mail.
