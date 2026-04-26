@@ -27,6 +27,7 @@ This repo stores a skill for macOS Mail.app integration.
 - `tests/dictionary_contract.sh`: contract test against Mail.app scripting dictionary.
 - `tests/unit_parsing.sh`: unit-ish tests for pure parsing AppleScripts (no Mail.app required).
 - `tests/smoke_mail.sh`: smoke test for the public command layer (skips when Mail.app is not available).
+- `tests/vm_mail_e2e.sh`: disposable VM-only public command exercise. Requires `MACOS_MAIL_VM_E2E=1`; creates drafts and opens Mail UI views, but does not send, move, or delete mail.
 - `.github/workflows/ci-pr.yml`, `ci-main.yml`: CI on PR and push to main.
 
 ## Public Rule
@@ -41,8 +42,10 @@ After making changes:
 - run `make check` to ensure Mail.app and `jq` are available;
 - run `make test` to run dictionary contract + unit + smoke tests;
 - run `make compile` to compile all AppleScript files (syntax check);
+- in a disposable Mail-configured VM, run `MACOS_MAIL_VM_E2E=1 tests/vm_mail_e2e.sh` for broader public command coverage;
 - run `prek run --all-files` to verify pre-commit checks (or rely on `.githooks/pre-commit`);
 - update `macos-mail/SKILL.md` when command coverage changes.
+- Development targets that call `sdef`/`osacompile` need full Xcode. The Makefile auto-exports `/Applications/Xcode.app/Contents/Developer` when `DEVELOPER_DIR` is unset, which keeps VM runs working even when Command Line Tools are selected.
 
 ## Editing Rules
 

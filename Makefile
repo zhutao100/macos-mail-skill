@@ -1,13 +1,21 @@
 .PHONY: dictionary-mail compile check test test-dictionary test-unit test-smoke lint
 
+XCODE_DEVELOPER_DIR ?= /Applications/Xcode.app/Contents/Developer
+
 dictionary-mail:
 	@set -euo pipefail; \
+	if [ -z "$${DEVELOPER_DIR:-}" ] && [ -d "$(XCODE_DEVELOPER_DIR)" ]; then \
+		export DEVELOPER_DIR="$(XCODE_DEVELOPER_DIR)"; \
+	fi; \
 	app="/System/Applications/Mail.app"; \
 	[ -d "$$app" ] || app="/Applications/Mail.app"; \
 	sdef "$$app"
 
 compile:
 	@set -euo pipefail; \
+	if [ -z "$${DEVELOPER_DIR:-}" ] && [ -d "$(XCODE_DEVELOPER_DIR)" ]; then \
+		export DEVELOPER_DIR="$(XCODE_DEVELOPER_DIR)"; \
+	fi; \
 	out_dir="build/applescripts"; \
 	rm -rf "$$out_dir"; \
 	mkdir -p "$$out_dir"; \

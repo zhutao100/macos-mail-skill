@@ -18,6 +18,7 @@ This repo stores a skill for Apple Mail.app integration on macOS via AppleScript
 - macOS 15+ (and future releases) with Mail.app configured and signed in
 - Automation permission granted to your terminal app
 - `jq`
+- Full Xcode for development targets that compile AppleScript or inspect the Mail scripting dictionary
 - (Optional) Full Disk Access for `macos-mail/scripts/commands/message/search-sqlite.sh`
 
 ## How To Use
@@ -77,6 +78,9 @@ For the full command set and examples, see `macos-mail/SKILL.md`.
 ## Development
 
 - Run checks: `make compile && make test && make lint`
+  - The Makefile uses `/Applications/Xcode.app/Contents/Developer` when `DEVELOPER_DIR` is unset, so VMs with Command Line Tools selected can still run `sdef`/`osacompile`.
+- Disposable VM-only end-to-end check: `MACOS_MAIL_VM_E2E=1 tests/vm_mail_e2e.sh`
+  - Run this only through a safe VM workflow. It creates draft messages and opens Mail UI views, but does not send, move, or delete mail.
 - Pre-commit (prek): `prek install --prepare-hooks` (optional self-healing hook: `git config core.hooksPath .githooks`)
 
 ## Acknowledgements
